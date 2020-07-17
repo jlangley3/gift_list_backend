@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_16_155055) do
+ActiveRecord::Schema.define(version: 2020_07_17_020615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "contact_interests", force: :cascade do |t|
+    t.bigint "contact_id", null: false
+    t.bigint "interest_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contact_id"], name: "index_contact_interests_on_contact_id"
+    t.index ["interest_id"], name: "index_contact_interests_on_interest_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "birthday"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_contacts_on_user_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.string "title"
@@ -23,6 +41,37 @@ ActiveRecord::Schema.define(version: 2020_07_16_155055) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "gifts", force: :cascade do |t|
+    t.string "name"
+    t.float "price"
+    t.boolean "given", default: true
+    t.integer "rating", default: 0
+    t.string "link"
+    t.bigint "event_id"
+    t.bigint "contact_id" 
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contact_id"], name: "index_gifts_on_contact_id"
+    t.index ["event_id"], name: "index_gifts_on_event_id"
+  end
+
+  create_table "interests", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reminders", force: :cascade do |t|
+    t.string "title"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.boolean "repeating", default: true
+    t.bigint "event_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_id"], name: "index_reminders_on_event_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -35,5 +84,11 @@ ActiveRecord::Schema.define(version: 2020_07_16_155055) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "contact_interests", "contacts"
+  add_foreign_key "contact_interests", "interests"
+  add_foreign_key "contacts", "users"
   add_foreign_key "events", "users"
+  add_foreign_key "gifts", "contacts"
+  add_foreign_key "gifts", "events"
+  add_foreign_key "reminders", "events"
 end

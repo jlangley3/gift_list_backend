@@ -2,7 +2,13 @@ class Api::V1::UsersController < ApplicationController
     # skip_before_action :authorized, only: [:create]
    
     def index
-      render json: User.all.as_json(:include => [:events])
+      @users = User.all
+      render json: @users
+    end
+
+    def show
+      user = User.find(params[:id])
+      render json: user
     end
 
     def profile

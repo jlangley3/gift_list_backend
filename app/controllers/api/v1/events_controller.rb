@@ -1,5 +1,5 @@
 class Api::V1::EventsController < ApplicationController
-
+    before_action :get_event, only: [:destroy, :update]
     
     def index
         events = Event.all
@@ -13,14 +13,15 @@ class Api::V1::EventsController < ApplicationController
     
 
     def create
+        # byebug
         event = Event.create(event_params)
-        render json: EventSerializer.new(event), status: :accepted
+  
+        render json: event
     end
 
     def update
         @event.update(event_params[:event])
-        # @event.requested.update(event_params[:requested_attributes])
-        render json: EventSerializer.new(@event)
+        render json: @event
     end
 
     def destroy 
@@ -36,6 +37,6 @@ class Api::V1::EventsController < ApplicationController
     end
 
     def event_params
-        params.require(:event).permit(:id, :title, :date, :budget)
+        params.require(:event).permit(:id, :title, :start_date, :end_date, :budget, :repeating, :user_id)
     end
 end

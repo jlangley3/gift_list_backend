@@ -1,34 +1,37 @@
-class GiftsController < ApplicationController
-  class Api::V1::EventsController < ApplicationController
+class Api::V1::GiftsController < ApplicationController
+  before_action :get_gift, only: [:destroy, :update]
       def index
-          contacts = Contact.all
-          render json: ContactSerializer.new(contacts)
+          gifts = Gift.all
+          render json: GiftSerializer.new(gifts)
       end
 
       def show
-          contact = Contact.find(params[:id])
-          render json: ContactSerializer.new(contact)
+          gift = Gift.find(params[:id])
+          render json: GiftSerializer.new(gift)
       end
 
 
       def create
-          contact = Contact.create(contact_params)
-          render json: ContactSerializer.new(contact), status: :accepted
+          gift = Gift.create(gift_params)
+          render json: gift
       end
-      def new
-        @reminder = Reminder.new
-        3.times {@Reminder.snacks.build}
+
+      def update
+        @gift.update(gift_params[:gift])
+        render json: gift
+      end
+
+
+      def destroy
+        gift = @gift
+        @gift.destroy
+        render json: gift, status: :accepted
       end
     
-      def create
-        @reminder = Reminder.create(Reminder_params)
-        
-      end
-    
+  
       private
     
-      def strong_params
-        params.require(:Reminder).permit(:name, :year_established, 
-            snacks_attributes: [:name, :calories, :deliciousness])
+      def gift_params
+        params.require(:gift).permit(:id, :name, :price, :given, :rating, :link, :event_id, :contact_id)
       end
 end

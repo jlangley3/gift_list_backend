@@ -18,18 +18,46 @@ Faker::UniqueGenerator.clear # Clears used values for all generators
 u1 = User.create(username: "Jay", password: "test", first_name: "Jay", last_name: "Slay", avatar: "https://vignette.wikia.nocookie.net/fire-brigade-of-flames/images/f/f0/Ogun_Montgomery.png/revision/latest/scale-to-width-down/340?cb=20200711161516")
 u2 = User.create(username: "Mae", password: "test", first_name: "Mae", last_name: "Slay", avatar: "https://pm1.narvii.com/7083/2a6e996164e1f94e572eb0043b1a7fa512989974r1-422-750v2_128.jpg")
 
-e1 = Event.create(title: "Chirtsmas", date: DateTime.new(2020, 12, 25), budget: 210, user: u1)
-e2 = Event.create(title: "Burt's Birthday", date: DateTime.new(2020, 9, 9), budget: 200, user: u1)
+e1 = Event.create(title: "Chirtsmas", start_date: DateTime.new(2020, 12, 25), end_date: DateTime.new(2020, 12, 25), budget: 210, user: u1)
+e2 = Event.create(title: "Burt's Birthday", start_date: DateTime.new(2020, 9, 9), end_date: DateTime.new(2020, 9, 9), budget: 100, user: u1)
+e1 = Event.create(title: "Mothers Day", start_date: DateTime.new(2021, 5, 1), end_date: DateTime.new(2021, 5, 1), budget: 210, user: u1)
+e2 = Event.create(title: "Jim's Birthday", start_date: DateTime.new(2020, 9, 9), end_date: DateTime.new(2020, 9, 9), budget: 300, user: u1)
 
-e3 = Event.create(title: "Chirtsmas", date: DateTime.new(2020, 12, 24), budget: 310, user: u2)
-e4 = Event.create(title: "Mom's Birthday", date: DateTime.new(2020, 8, 8), budget: 300, user: u2)
+e3 = Event.create(title: "Chirtsmas", start_date: DateTime.new(2020, 12, 24), end_date: DateTime.new(2020, 12, 24), budget: 310, user: u2)
+e4 = Event.create(title: "Mom's Birthday", start_date: DateTime.new(2020, 8, 8), end_date: DateTime.new(2020, 8, 8), budget: 300, user: u2)
 
-15.times do
+5.times do
   Contact.create(
     name: Faker::Name.unique.name,
     birthday:DateTime.new(1990, 9, 9),
-    # avatar: Faker::Avatar.image,
+    avatar: Faker::Avatar.image,
+    kind: "family",
     user: u1
+  )
+end
+5.times do
+  Contact.create(
+    name: Faker::Name.unique.name,
+    birthday:DateTime.new(1940, 12, 2),
+    avatar: Faker::Avatar.image,
+    user: u1
+  )
+end
+5.times do
+  Contact.create(
+    name: Faker::Name.unique.name,
+    birthday:DateTime.new(1930, 6, 9),
+    avatar: Faker::Avatar.image,
+    user: u2
+  )
+end
+5.times do
+  Contact.create(
+    name: Faker::Name.unique.name,
+    birthday:DateTime.new(1930, 11, 9),
+    kind: "family",
+    # avatar: Faker::Avatar.image,
+    user: u2
   )
 end
 
@@ -61,8 +89,8 @@ end
 
   r1 = Reminder.create(
     title: "Christmas",
-    start_date: DateTime.new(2020, 12, 24),
-    end_date: DateTime.new(2020, 12, 28),
+    start_date: DateTime.new(2020, 11, 12),
+    end_date: DateTime.new(2020, 11, 12),
     repeating: true,
     event: e1)
 

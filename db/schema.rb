@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_020615) do
   create_table "contacts", force: :cascade do |t|
     t.string "name"
     t.datetime "birthday"
+    t.string "type", default: "friend"
+    t.string "avatar", default: "https://i.pinimg.com/originals/49/60/32/496032fb38b76e5bc22f8eb1d4a5d9be.jpg"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -35,8 +37,10 @@ ActiveRecord::Schema.define(version: 2020_07_17_020615) do
 
   create_table "events", force: :cascade do |t|
     t.string "title"
-    t.datetime "date"
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.float "budget"
+    t.boolean "repeating", default: true
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -49,8 +53,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_020615) do
     t.boolean "given", default: true
     t.integer "rating", default: 0
     t.string "link"
-    t.bigint "event_id"
-    t.bigint "contact_id" 
+    t.bigint "event_id", null: false
+    t.bigint "contact_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["contact_id"], name: "index_gifts_on_contact_id"

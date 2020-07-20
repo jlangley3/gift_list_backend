@@ -8,15 +8,20 @@ class Api::V1::AuthController < ApplicationController
           # encode token comes from ApplicationController
           token = encode({user_id: @user.id})
           # token = encode({ user_id: @user.id })
+          myEvents = @user.events.map { |e| EventSerializer.new(e) }
+          myContacts = @user.contacts.map { |c| ContactSerializer.new(c) } 
+          myUser = UserSerializer.new(@user)
           render json: {
-            message: 'You are logged in!',
-            user: UserSerializer.new(@user),
+            message: 'You are logged in',
+            user: myUser,
+            contacts: myContacts,
+            events: myEvents,
             token: token,
             authenticated: true
             }, status: :accepted
         else
           render json: {
-            message: 'Username and password do not match',
+            message: 'Username and Password are No Good',
             authenticated: false
           }, status: :not_acceptable
         end

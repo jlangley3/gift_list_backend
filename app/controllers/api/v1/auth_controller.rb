@@ -14,8 +14,6 @@ class Api::V1::AuthController < ApplicationController
           render json: {
             message: 'You are logged in',
             user: myUser,
-            contacts: myContacts,
-            events: myEvents,
             token: token,
             authenticated: true
             }, status: :accepted

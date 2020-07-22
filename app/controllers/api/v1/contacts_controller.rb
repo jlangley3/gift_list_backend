@@ -8,13 +8,13 @@ class Api::V1::ContactsController < ApplicationController
 
         def show
             contact = Contact.find(params[:id])
-            render json: ContactSerializer.new(contact)
+            render json: contact
         end
         
 
         def create
             contact = Contact.create(contact_params)
-            render json: ContactSerializer.new(contact), status: :accepted
+            render json: contact
         end
         
         def update

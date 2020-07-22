@@ -20,7 +20,8 @@ class Api::V1::EventsController < ApplicationController
     end
 
     def update
-        @event.update(event_params[:event])
+    
+        @event.update(event_params)
         render json: @event
     end
 

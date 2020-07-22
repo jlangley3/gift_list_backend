@@ -13,10 +13,10 @@ class Api::V1::UsersController < ApplicationController
 
     def show
       user = User.find(params[:id])
-      myEvents = user.events.map { |e| EventSerializer.new(e) }
-      myContacts = user.contacts.map { |c| ContactSerializer.new(c) } 
+      # myEvents = user.events.map { |e| EventSerializer.new(e) }
+      # myContacts = user.contacts.map { |c| ContactSerializer.new(c) } 
       myUser = UserSerializer.new(user)
-      render json: {user: myUser, contacts: myContacts, events: myEvents}
+      render json: {user: myUser}
     end
 
     def profile
@@ -27,14 +27,21 @@ class Api::V1::UsersController < ApplicationController
       myEvents = user.events.map { |e| EventSerializer.new(e) }
       myContacts = user.contacts.map { |c| ContactSerializer.new(c) } 
       myUser = UserSerializer.new(user)
-      render json: {user: myUser, contacts: myContacts, events: myEvents}
+      render json: {user: myUser}
     end
    
     def create
+    
       @user = User.create(user_params)
       if @user.valid?
         @token = encode({ user_id: @user.id })
-        render json: { user: UserSerializer.new(@user), token: @token }, status: :created
+        myUser = UserSerializer.new(@user)
+        render json: {
+          message: 'You are logged in',
+          user: myUser,
+          token: @token,
+          authenticated: true
+          }, status: :accepted
       else
         render json: { error: 'failed to create user' }, status: :not_acceptable
       end

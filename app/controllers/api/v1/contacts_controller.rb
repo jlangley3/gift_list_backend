@@ -36,6 +36,6 @@ class Api::V1::ContactsController < ApplicationController
         end
       
         def contact_params
-          params.require(:contact).permit(:id, :birthday, :kind, :user_id, :avatar)
+          params.require(:contact).permit(:id, :name, :birthday, :kind, :user_id, :avatar)
         end
       end

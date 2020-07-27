@@ -13,14 +13,14 @@ class Api::V1::EventsController < ApplicationController
     
 
     def create
-        # byebug
+      
         event = Event.create(event_params)
   
         render json: event
     end
 
     def update
-    
+   
         @event.update(event_params)
         render json: @event
     end

@@ -29,7 +29,7 @@ module BackendFinalProject
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     
-    config.time_zone = 'Central Time (US & Canada)'
+    config.time_zone = 'Eastern Time (US & Canada)'
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.

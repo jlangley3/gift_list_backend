@@ -15,7 +15,6 @@ class UserSerializer < ActiveModel::Serializer
         
         cons =[]
         contacts.each do |contact|
-          # custom_gifts = []
           custom_contact = contact.attributes
           gifts = contact.gifts.where(:event => event )
                 custom_contact[:gifts] = gifts
@@ -33,6 +32,21 @@ class UserSerializer < ActiveModel::Serializer
         custom_event[:gifts] = gifts
         custom_event[:contacts] = cons
         custom << custom_event
+      end
+      return custom
+    end
+
+
+    def contacts
+      custom = []
+      
+      object.contacts.each do |contact|
+        custom_contact = contact.attributes 
+        interests = contact.interests 
+        gifts = contact.gifts
+        custom_contact[:interests] = interests
+        custom_contact[:gifts] = gifts
+        custom << custom_contact
       end
       return custom
     end

@@ -13,8 +13,10 @@ class Api::V1::InterestsController < ApplicationController
 
 
   def create
-      interest = Interest.create(interest_params)
-      render json: InterestSerializer.new(interest), status: :accepted
+    byebug
+      interest = Interest.create(name: params[:name])
+      interest_contact = ContactInterest.create(contact_id: params[:contact_id], interest_id: interest.id)
+      render json: interest
   end
 
   def update
@@ -35,7 +37,7 @@ class Api::V1::InterestsController < ApplicationController
       end
   
       def interest_params
-          params.require(:interest).permit(:id, :title, :start_date, :end_date, :budget, :repeating, user_id)
+          params.require(:interest).permit(:id, :name, :contact_id)
       end
   end
   

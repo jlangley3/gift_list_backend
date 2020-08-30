@@ -6,7 +6,6 @@ Rails.application.routes.draw do
       resources :gifts
       resources :interests
       resources :contacts
-      resources :reminders
       resources :events
       resources :users, only: [:index, :show, :create, :update]
       post '/login', to: 'auth#create'

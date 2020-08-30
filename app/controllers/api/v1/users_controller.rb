@@ -6,21 +6,13 @@ class Api::V1::UsersController < ApplicationController
       render json: @users
     end
 
-    # def show
-    #   user = User.find(params[:id])
-    #   render json: user
-    # end
-
     def show
       user = User.find(params[:id])
-      # myEvents = user.events.map { |e| EventSerializer.new(e) }
-      # myContacts = user.contacts.map { |c| ContactSerializer.new(c) } 
       myUser = UserSerializer.new(user)
       render json: {user: myUser}
     end
 
     def profile
-      #token = request.headers['Authentication'].split(' ')[1]
       token = decode(request.headers["Authentication"])
       user_id = token["user_id"]
       user = User.find(user_id)
@@ -31,7 +23,6 @@ class Api::V1::UsersController < ApplicationController
     end
    
     def create
-    
       @user = User.create(user_params)
       if @user.valid?
         @token = encode({ user_id: @user.id })

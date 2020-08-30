@@ -13,7 +13,6 @@ class Api::V1::InterestsController < ApplicationController
 
 
   def create
-  
       interest = Interest.create(name: params[:name])
       interest_contact = ContactInterest.create(contact_id: params[:contact_id], interest_id: interest.id)
       render json: interest

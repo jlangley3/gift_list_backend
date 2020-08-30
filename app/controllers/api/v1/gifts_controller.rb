@@ -10,7 +10,6 @@ class Api::V1::GiftsController < ApplicationController
           render json: gift
       end
 
-
       def create
           gift = Gift.create(gift_params)
           render json: gift

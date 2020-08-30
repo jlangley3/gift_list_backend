@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_17_020615) do
+ActiveRecord::Schema.define(version: 2020_08_30_021638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_020615) do
   create_table "contacts", force: :cascade do |t|
     t.string "name"
     t.datetime "birthday"
-    t.string "type", default: "friend"
+    t.string "kind", default: "friend"
     t.string "avatar", default: "https://i.pinimg.com/originals/49/60/32/496032fb38b76e5bc22f8eb1d4a5d9be.jpg"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -67,17 +67,6 @@ ActiveRecord::Schema.define(version: 2020_07_17_020615) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "reminders", force: :cascade do |t|
-    t.string "title"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.boolean "repeating", default: true
-    t.bigint "event_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["event_id"], name: "index_reminders_on_event_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -94,5 +83,4 @@ ActiveRecord::Schema.define(version: 2020_07_17_020615) do
   add_foreign_key "events", "users"
   add_foreign_key "gifts", "contacts"
   add_foreign_key "gifts", "events"
-  add_foreign_key "reminders", "events"
 end

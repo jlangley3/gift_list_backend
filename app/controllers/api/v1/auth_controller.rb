@@ -17,12 +17,12 @@ class Api::V1::AuthController < ApplicationController
             token: token,
             authenticated: true
             }, status: :accepted
-        else
+      else
           render json: {
             message: 'Username and Password are No Good',
             authenticated: false
           }, status: :not_acceptable
-        end
+      end
     end
 
       private
